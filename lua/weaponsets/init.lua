@@ -6,7 +6,7 @@ include("weaponsets/player.lua")
 include("weaponsets/commands.lua")
 
 WEAPONSETS.PasteBinSets = "Q72iy08U"
-WEAPONSETS.Version = 201904220 -- YYYYMMDDX
+WEAPONSETS.Version = 202001200 -- YYYYMMDDX
 
 WEAPONSETS.Convars = {
     ["loadoutSet"] = CreateConVar("weaponsets_loadoutset", "<default>", {FCVAR_REPLICATED, FCVAR_ARCHIVE}, "Loadout weapon set for all players"),
@@ -21,7 +21,7 @@ util.AddNetworkString("wepsetsToCl")
     Player access
 -----------------------------------------------------------]]
 function WEAPONSETS:Access(ply)
-    if not IsValid(ply) then return true end
+    if not IsValid(ply) then return true end -- server console
 
     if self.Convars["adminOnly"]:GetBool() then
         return ply:IsSuperAdmin()
@@ -40,7 +40,7 @@ function WEAPONSETS:FileExists(name)
     if not file.Exists("weaponsets", "DATA") then
         file.CreateDir("weaponsets")
 
-        return false
+        return false, path
     end
 
     return file.Exists(path, "DATA"), path
@@ -221,6 +221,7 @@ end
     Weapon set giving
 -----------------------------------------------------------]]
 function WEAPONSETS:Give(ply, name)
+
     if not IsValid(ply) then return false end
 
     if name == "<inherit>" then
@@ -232,6 +233,14 @@ function WEAPONSETS:Give(ply, name)
     if name == "<default>" then return false end
     local tbl = self:LoadFromFile(name)
     if tbl == nil then return false end
+
+    -- Playermodel
+    if tbl.playermodel then
+        timer.Simple( 0.1, function() 
+            ply:SetModel(tbl.playermodel)
+            ply:SetupHands() 
+        end )
+    end
 
     if tbl.health > 0 then
         ply:SetHealth(tbl.health)

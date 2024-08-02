@@ -239,6 +239,16 @@ function WEAPONSETS:OpenEditMenu(name, tbl)
     plySetPan:SetPaintBackground(false)
     sheet:AddSheet("Player settings", plySetPan, "icon16/user_edit.png")
 
+    -- Playermodel
+    local plyPlayermodel = vgui.Create("DTextEntry", plySetPan)
+    plyPlayermodel:Dock(TOP)
+    plyPlayermodel:SetPlaceholderText("Playermodel path")
+    plyPlayermodel:SetValue(tbl.playermodel != nil and tbl.playermodel or "")
+
+    plyPlayermodel.OnEnter = function(self)
+        tbl.playermodel = self:GetValue()
+    end
+
     -- Tree
     local plyProp = vgui.Create("DProperties", plySetPan)
     plyProp:DockMargin(pad, pad, pad, pad)
