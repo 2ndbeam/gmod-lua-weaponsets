@@ -337,9 +337,30 @@ function WEAPONSETS:OpenEditMenu(name, tbl)
     end)
 
     -- Speed row
-    numRow("Numbers", "Speed multiplier (def. 1)", "Float", tbl.speed or 1, 0, 100, function(val)
-        tbl.speed = val
+    numRow("Numbers", "Walk speed (def. 400)", "Int", tbl.walkSpeed or 400, 0, 10000, function(val)
+        tbl.walkSpeed = val
     end)
+
+    numRow("Numbers", "Run speed (def. 600)", "Int", tbl.runSpeed or 600, 0, 10000, function(val)
+        tbl.runSpeed = val
+    end)
+
+    numRow("Numbers", "Slow walk speed (def. 200)", "Int", tbl.slowWalkSpeed or 200, 0, 10000, function(val)
+        tbl.slowWalkSpeed = val
+    end)
+
+    numRow("Numbers", "Duck speed (def. 0.3)", "Float", tbl.crouchSpeed or 0.3, 0.01, 0.99, function(val)
+        tbl.crouchSpeed = val
+    end)
+
+    numRow("Numbers", "UnDuck speed (def. 0.3)", "Float", tbl.unCrouchSpeed or 0.3, 0.01, 0.99, function(val)
+        tbl.unCrouchSpeed = val
+    end)
+
+    -- Opacity row
+    --numRow("Numbers", "Черных хуев в твою мамашу", "Int", 451, 12, 451, function(val)
+    --    tbl.opacity = val
+    --end)
 
     -- Opacity row
     numRow("Numbers", "Opacity (-1 = no draw)", "Int", tbl.opacity or 255, -1, 255, function(val)
