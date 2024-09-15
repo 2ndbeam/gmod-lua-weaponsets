@@ -206,7 +206,15 @@ function WEAPONSETS:RestoreDefaults(ply)
     ply.weaponsets_affected = false
 end
 
-local function applySpeed(ply, walkSpeed,slowWalkSpeed, runSpeed,unCrouchSpeed,crouchSpeed)
+local function ApplySpeed(ply, walkSpeed,slowWalkSpeed, runSpeed,unCrouchSpeed,crouchSpeed)   
+    
+    if not IsValid(ply) then return end
+    if walkSpeed == nil then walkSpeed = 400 end
+    if slowWalkSpeed == nil then slowWalkSpeed = 200 end
+    if runSpeed == nil then runSpeed = 600 end
+    if crouchSpeed == nil then crouchSpeed = 0.3 end
+    if unCrouchSpeed == nil then unCrouchSpeed = 0.3 end
+
     ply:SetWalkSpeed(walkSpeed)
     ply:SetSlowWalkSpeed(slowWalkSpeed)
     ply:SetRunSpeed(runSpeed)
@@ -266,7 +274,7 @@ function WEAPONSETS:Give(ply, name)
         ply:SetFriction(tbl.friction)
     end
 
-    applySpeed(ply, tbl.walkSpeed,tbl.slowWalkSpeed, tbl.runSpeed, tbl.unCrouchSpeed, tbl.crouchSpeed)
+    ApplySpeed(ply, tbl.walkSpeed,tbl.slowWalkSpeed, tbl.runSpeed, tbl.unCrouchSpeed, tbl.crouchSpeed)
 
     if tbl.opacity < 255 and tbl.opacity >= 0 then
         ply:SetNoDraw(false)
